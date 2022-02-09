@@ -29,12 +29,14 @@ resource "alicloud_vswitch" "new" {
 }
 
 resource "alicloud_nat_gateway" "new" {
-  count        = var.new_vpc == true ? 1 : 0
-  vpc_id       = concat(alicloud_vpc.new.*.id, [""])[0]
-  name         = local.new_vpc_name
-  nat_type     = "Enhanced"
-  payment_type = "PayAsYouGo"
-  //  tags   = local.new_vpc_tags
+  count                = var.new_vpc == true ? 1 : 0
+  vpc_id               = concat(alicloud_vpc.new.*.id, [""])[0]
+  nat_gateway_name     = local.new_vpc_name
+  nat_type             = "Enhanced"
+  payment_type         = "PayAsYouGo"
+  internet_charge_type = "PayByLcu"
+  vswitch_id           = alicloud_vswitch.new[0].id
+  tags                 = local.new_vpc_tags
 }
 
 resource "alicloud_eip" "new" {
