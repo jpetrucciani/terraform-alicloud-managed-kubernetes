@@ -146,6 +146,12 @@ variable "cluster_network_type" {
   default     = "flannel"
 }
 
+variable "cluster_spec" {
+  description = "(Optional, ForceNew, Available in 1.101.0+) The cluster specifications of kubernetes cluster,which can be empty. valid options are `ack.standard` and `ack.pro.small`."
+  type        = string
+  default     = "ack.pro.small"
+}
+
 variable "new_sls_project" {
   description = "(Deprecated from v1.3.0, use 'cluster_addons' instead)Create a new sls project for this module."
   type        = bool

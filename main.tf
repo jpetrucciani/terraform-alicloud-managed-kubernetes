@@ -24,5 +24,7 @@ resource "alicloud_cs_managed_kubernetes" "this" {
   client_key      = var.client_key_path
   cluster_ca_cert = var.cluster_ca_cert_path
 
+  cluster_spec = var.cluster_spec
+
   depends_on = [alicloud_snat_entry.new]
 }
