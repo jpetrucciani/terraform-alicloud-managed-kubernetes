@@ -28,6 +28,15 @@ resource "alicloud_vswitch" "new" {
   tags         = local.new_vpc_tags
 }
 
+resource "alicloud_vswitch" "new-pod" {
+  count        = var.new_vpc == true ? length(var.pod_vswitch_cidrs) : 0
+  vpc_id       = concat(alicloud_vpc.new.*.id, [""])[0]
+  cidr_block   = var.pod_vswitch_cidrs[count.index]
+  zone_id      = length(var.availability_zones) > 0 ? element(var.availability_zones, count.index) : element(data.alicloud_zones.default.ids.*, count.index)
+  vswitch_name = local.new_vpc_name
+  tags         = local.new_vpc_tags
+}
+
 resource "alicloud_nat_gateway" "new" {
   count                = var.new_vpc == true ? 1 : 0
   vpc_id               = concat(alicloud_vpc.new.*.id, [""])[0]
