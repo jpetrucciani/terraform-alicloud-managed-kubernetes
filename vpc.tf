@@ -67,3 +67,10 @@ resource "alicloud_snat_entry" "new" {
   source_vswitch_id = alicloud_vswitch.new[count.index].id
   snat_ip           = concat(alicloud_eip.new.*.ip_address, [""])[0]
 }
+
+resource "alicloud_snat_entry" "new-pod" {
+  count             = var.new_vpc == true ? length(var.pod_vswitch_cidrs) : 0
+  snat_table_id     = concat(alicloud_nat_gateway.new-pod.*.snat_table_ids, [""])[0]
+  source_vswitch_id = alicloud_vswitch.new-pod[count.index].id
+  snat_ip           = concat(alicloud_eip.new-pod.*.ip_address, [""])[0]
+}
