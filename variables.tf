@@ -48,6 +48,12 @@ variable "vswitch_cidrs" {
   default     = ["192.168.1.0/24"]
 }
 
+variable "pod_vswitch_ids" {
+  description = "List Ids of existing vswitch for pods. (Terway specific)"
+  type        = list(string)
+  default     = []
+}
+
 variable "pod_vswitch_cidrs" {
   description = "List cidr blocks used to create several new pod vswitches when 'new_vpc' is true."
   type        = list(string)
